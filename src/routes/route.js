@@ -9,11 +9,13 @@ const blogController = require ('../controllers/blogController')
 
 router.post("/Authors" ,authorController.createAuthor )
 
+//autherlogin
+
 router.post('/login',authorController.loginAuthor);
 
 router.post('/blogs', middleware.middle1, blogController.Blogs)
 
-router.get('/getBlog', blogController.getBlogs)
+router.get('/getBlog', middleware.middle1, blogController.getBlogs)
 
 router.put('/blogs/:blogId',middleware.middle1,middleware.middle2, blogController.updating)
 
@@ -21,9 +23,7 @@ router.put('/blogs/:blogId',middleware.middle1,middleware.middle2, blogControlle
 
 router.delete('/blogs/:blogId', middleware.middle1, middleware.middle2, blogController.deleting)
 
-router.delete('/blogs/:deletedBlogs',middleware.middle1,middleware.middle2, middleware.autherQuery, blogController.deletedBlogs)
-
-//autherlogin
+router.delete('/blogs/:deletedBlogs', middleware.middle1, middleware.middle2, blogController.deletedBlogs)
 
 
 

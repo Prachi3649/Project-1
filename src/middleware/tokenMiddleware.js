@@ -62,39 +62,11 @@ const middle2= async function(req, res, next){
 }
 
 
-//authorisation with query
 
-const autherQuery = async function(req, res, next){
-  try{
-     let token= req.headers["x-api-key"];
-     let user=decodedToken.userId
-     let authorId=req.query.authorId
-     console.log(authorId)
-
-     if(!token)
-     res.status(400).send({status:false, msg:"token not found"})
-      
-    let decodedToken=jwt.verify(token, 'Prachi11-thorium')
-    if(!decodedToken)
-    res.status(400).send({status:false, msg:"decoded token is invalid"})
-    
-    let authorDetails= await authorModel.findById(authorId)
-    console.log(authorDetails)
-
-    if(authorDetails!=user)
-    res.status(400).send({status: false, msg:" not authorize"})
-
-    next()
-  }
-  catch(error){
-    console.log(error)
-    res.status(500).send({status:false, msg:error})
-    }
-}
 
 module.exports.middle1=middle1
 
 module.exports.middle2=middle2
 
-module.exports.autherQuery=autherQuery
+
 
