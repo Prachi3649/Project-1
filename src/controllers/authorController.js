@@ -5,25 +5,34 @@ const jwt = require("jsonwebtoken");
 
 
 const createAuthor = async function (req, res) {
-    try {
-        var data = req.body
-        let savedData = await authorModel.create(data)
-        res.status(200).send({ data: savedData })
-    } catch (error) {
-        res.status(500).send({ status: "failed", message: error.message })
+  try {
+    var data = req.body
+    if(Object.keys(data).length==0){
+    res.status(400).send({status:false, msg:" BAD REQUEST"})
+    }
+    let savedData = await authorModel.create(data)
+    if (data) {
+      res.status(201).send({ status: true, message: "Success", data: savedData })
+    }
+    else {
+      res.status(400).send({ status: false, msg: " Please provid valid data" })
     }
 
-    
+  } catch (error) {
+    res.status(500).send({ status: "failed", message: error.message })
+  }
+
+
 }
 
 //login author(phase 2)
 
 const loginAuthor = async function (req, res) {
-  try{
+  try {
     let userName = req.body.email;
     let password = req.body.password;
-  
-    let user = await authorModel.findOne({ email:userName, password: password });
+
+    let user = await authorModel.findOne({ email: userName, password: password });
     if (!user)
       res.status(400).send({
         status: false,
@@ -41,8 +50,8 @@ const loginAuthor = async function (req, res) {
   catch (err) {
     console.log(err)
     res.status(500).send({ status: "failed", message: err.message })
-}
-  
+  }
+
 };
 // Once the login is successful, create the jwt token with sign function
 // Sign function has 2 inputs:

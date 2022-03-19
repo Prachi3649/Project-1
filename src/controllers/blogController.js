@@ -7,19 +7,38 @@ let Blogs = async function (req, res) {
 
     try {
         let data = req.body
+        // if (!data.blogs)
+        // {res.status(400).send({status:false, msg:"please provide blogs Body"})}
+        if (!data.title)
+        {res.status(400).send({status:false, msg:"please provide title"})}
+        if (!data.body)
+        {res.status(400).send({status:false, msg:"please provide body"})}
+        if (!data.tags)
+        {res.status(400).send({status:false, msg:"please provide tags"})}
+        if (!data.category)
+        {res.status(400).send({status:false, msg:"please provide category"})}
+        if (!data.subcategory)
+        {res.status(400).send({status:false, msg:"please provide subcategory"})}
+        
 
+         //&& !data.body && !data.category && !data.category && !data.subcategory)  {res.status(400).send({status:false, msg:"please provide data"})}
+        // if (!data)  {req.status(400).send({status:false, msg:"please provide data"})}
         let authorId = data.authorId
         let authorReq = await authorModel.findById(authorId)
         if (authorReq) {
             let createBlog = await blogModel.create(data)
             res.status(201).send({ status: true, data: createBlog })
-        } else {
+        } 
+        else {
             res.status(400).send({ status: false, msg: `${authorId} is not available, please enter valid authorId` })
         }
+       
+
+        
     }
     catch (error) {
-        res.status(500).send({ status: false, message: error.message })
-    }
+    res.status(500).send({ status: false, message: error.message })
+}
 
 };
 
@@ -98,7 +117,7 @@ const updating = async function (req, res) {
 
 const deleting = async function (req, res) {
     try {
-        let id = req.params.blogId
+        let id = req.params.blogId 
         let data = await blogModel.findById(id)
         if (data) {
             if (data.isDeleted == false) {
@@ -113,8 +132,8 @@ const deleting = async function (req, res) {
 
     }
     catch (err) {
-    console.log(err)
-    res.status(500).send({ status: false, message: err.message }) 
+        console.log(err)
+        res.status(500).send({ status: false, message: err.message })
     }
 }
 
