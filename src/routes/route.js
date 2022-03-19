@@ -13,7 +13,7 @@ router.post("/Authors" ,authorController.createAuthor )
 
 router.post('/login',authorController.loginAuthor);
 
-router.post('/createblogs',  blogController.Blogs)
+//router.post('/createblogs',  blogController.Blogs)
 
 router.post('/blogs', middleware.middle1, blogController.Blogs)
 

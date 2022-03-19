@@ -27,44 +27,6 @@ const middle1= async function (req, res, next){
 }
 
 
-// //authorise
-// const middle2= async function(req, res, next){
-//   try{
-//   let token =req.headers["x-api-key"]
-//    let blogId=req.param.blogId
-//    if (!token)
-//    res.status(400).send({status:false, msg:"token not valid(authorise)"})
-
-//    //if (!blogId) { res.status(400).send({status:false, msg:"blogId not abilable (authorise)"})}
-
-//    let blogsDetails=await blogModel.findOne(blogId)
-//    if (!blogsDetails) { res.status(400).send({status:false, msg:"blogsDetails not abilable (authorise)"})}
-
-//    let authorId=blogsDetails.authorId
-//    console.log(authorId)
-   
-//    let decodedToken = jwt.verify(token, 'Prachi11-thorium')
-//    console.log(decodedToken)
-
-//    let userId=decodedToken.userId
-//     if(!decodedToken)
-//     res.status(400).send({status: false, msg:"token is not valid"})
-
-//     if(authorId!=userId)
-//     res.status(400).send({status: false, msg: "not authorize"})
-
-//     if(authorId!=token)
-//     res.status(400).send({status: false, msg: "Token is not match to authorId "})
-
-
-//    next()
-   
-//   }
-//   catch(error){
-//   console.log(error)
-//   res.status(500).send({status:false, msg:error})
-//   }
-// }
 
 
 //authorise
