@@ -1,37 +1,30 @@
 const express = require('express');
 const router = express.Router();
-const middleware=require("../middleware/tokenMiddleware")
+
 //--------------------------------------------------
 const authorController =require('../controllers/authorController')
 const blogController = require ('../controllers/blogController')
+const middleware=require("../middleware/tokenMiddleware")
 
 //****************************************** */
 
-router.post("/Authors" ,authorController.createAuthor )
+//auther router
 
-//autherlogin
+router.post("/Authors" ,authorController.registerAuthor )
 
 router.post('/login',authorController.loginAuthor);
 
-//router.post('/createblogs',  blogController.Blogs)
+// BLOG ROUTER
 
-router.post('/blogs', middleware.middle1, blogController.Blogs)
+router.post('/blogs', middleware.middle1, blogController.createBlog)
 
-router.get('/getBlog', middleware.middle1, blogController.getBlogs)
+router.get('/getBlog', middleware.middle1, blogController.listBlog)
 
-router.put('/blogs/:blogId',middleware.middle1,middleware.middle2, blogController.updating)
+router.put('/blogs/:blogId',middleware.middle1, blogController.updateBlog)
 
-//router.delete('/blogs/:blogId', blogController.deleting)
+router.delete('/blogs/:blogId', middleware.middle1, blogController.deleteBlogByID)
 
-router.delete('/blogs/:blogId', middleware.middle1, middleware.middle2, blogController.deleting)
-
-router.delete('/blogs/:deletedBlogs', middleware.middle1, middleware.middle2, blogController.deletedBlogs)
-
-
-
-
-
-
+router.delete('/blogs', middleware.middle1, blogController.deleteBlogByParams)
 
 
 module.exports = router;

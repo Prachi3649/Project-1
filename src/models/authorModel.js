@@ -2,37 +2,41 @@ const mongoose = require('mongoose')
 const validator = require('validator');
 
 const authorSchema = new mongoose.Schema({
-    firstName: {
+    fname: {
         type: String,
-        required: true
+        required: 'First name is required',
+        trim:true
     },
-    lastName: {
+    lname: {
         type: String,
-        requried: true
+        requried: 'Last name is required',
+        trim:true
     },
     title: {
         type:String,
-        enum: ['Mr', 'Mrs', 'Miss']
+        enum: ['Mr', 'Mrs', 'Miss'],
+        requried: 'title  is required',
     },
     email: {
         type:String,
-        requried: true,
+        requried:  'Email address  is required',
         unique: true,
         trim: true,
         lowercase:true,
-       //match:[/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'please fill a valid email address'],
-        validate(value){ 
-            if (!validator.isEmail(value)){
-            throw new error("email is invalid")
-         } 
-        }
-      
+        validate:{
+            validator:function(email){
+            return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
+        },
+            msg:'Please fill a valid email address', isAsync:false
+        } 
     },
+      
     password: {
         type: String,
-        requried: true,
-        numberChars : ["0123456789", 'please fill password address'],
+        required: 'password is required',
+        trim:true
+        
     }
 
 }, { timestamps: true })
-module.exports = mongoose.model('Author', authorSchema)
+module.exports = mongoose.model('Author', authorSchema, 'authors')
